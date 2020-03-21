@@ -1,0 +1,83 @@
+
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+
+</style>
+<script>
+function data()
+{
+var data = null;
+
+var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
+
+xhr.addEventListener("readystatechange", function () {
+	if (this.readyState === this.DONE) {
+		console.log(this.responseText);		
+		var json = JSON.parse(this.responseText);
+		var data1=json["data"];
+		var data2=data1['covid19Stats'];
+		var data3=data2[0];//Update"]);
+		var lastUpdate=data3.lastUpdate;
+		var confirmed=data3.confirmed;
+		var deaths=data3.deaths;
+		var recovered=data3.recovered;
+		document.getElementById('lblconfirmed').innerHTML="Total Confirmed Cases " +confirmed;		
+		document.getElementById('lbldeaths').innerHTML="Death Toll "+deaths;
+		document.getElementById('lblrecovered').innerHTML="Total Recovered Cases "+recovered;
+		document.getElementById('lblstatus').innerHTML="Last Updated on "+lastUpdate;	
+		document.getElementById("lblconfirmed").style.color = "orange";
+		document.getElementById("lbldeaths").style.color = "red";
+		document.getElementById("lblrecovered").style.color = "green";
+		document.getElementById("lblstatus").style.color = "pink";
+	}
+});
+
+xhr.open("GET", "https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/stats?country=India&City=Pune");
+xhr.setRequestHeader("x-rapidapi-host", "covid-19-coronavirus-statistics.p.rapidapi.com");
+xhr.setRequestHeader("x-rapidapi-key", "1d687c4d0emsh17ebca2c61f29f9p1869a3jsne8e089e2c7f9");
+
+var data=xhr.send(data);
+
+}
+
+function getReqVal(val,data) {
+    for (var item in data.data) {
+       if(item.value == val) {
+           return item.requiresValidation;
+       }
+    }
+}
+</script>
+<body onload="data()">
+<h6><marquee> It will take some time to refresh data. TAT : 15 Seconds. </marquee></h6>
+
+<div class="w3-container w3-teal">
+  <h1 align=center>COVID19 INDIA</h1>
+  <h5 align=center><font color="pink">Note: Data collected from free : <a href="https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/stats"> API (Daily).</a></font></h5>
+</div>
+
+<div class="w3-container">
+ <h3 align=center><b><p  id='lblconfirmed'><font color="red">Fetching data.... </p></b><h3>
+</div>
+
+<div class="w3-container w3-teal">
+  <h3 align=center><b><p id='lbldeaths'><font color="red">Fetching data..... </font></p></b><h3>
+</div>
+<div class="w3-container">
+  <h3 align=center><b><p id='lblrecovered'><font color="green" >Fetching data..... </font> </p></b><h3>
+</div>
+<div class="w3-container w3-teal">
+  <h3 align=center><b><p id='lblstatus'><font color="red">Fetching data.....  </font></p></b><h3>
+</div>
+</body>
+<h6 align=middle><font color="black">1. HANDSWash them often 2. ELBOWCough into it. 3. FACEDon't touch it. 4. SPACEKeep safe distance 5. FEELsick? Stay home</font></p></h6>
+<div class="gallery" align=center>
+	<div class="flag"></div>
+</div>
+<footer class="w3-container">
+  <p align=center> <font color="blue"><b><a href="https://gramho.com/media/2250274737070900026">Yogesh Shivram Jadhav</font></b></p>
+</footer>
+</html>
